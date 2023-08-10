@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package pos.mvc;
+import pos.mvc.view.CustomerView;
 
 /**
  *
@@ -15,7 +16,8 @@ public class PosMvc {
      */
     public static void main(String[] args) {
         
-        System.out.println("helo");
+       new CustomerView().setVisible(true);
+       
         // TODO code application logic here
     }
     
