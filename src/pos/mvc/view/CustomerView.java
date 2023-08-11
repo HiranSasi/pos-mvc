@@ -3,17 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package pos.mvc.view;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import pos.mvc.contoller.CustomerContoller;
+import pos.mvc.model.CustomerModel;
 
 /**
  *
  * @author Hiran
  */
 public class CustomerView extends javax.swing.JFrame {
+    
+    CustomerContoller customerContoller;
+    
+    
 
     /**
      * Creates new form customerView
      */
     public CustomerView() {
+        customerContoller = new CustomerContoller();
         initComponents();
     }
 
@@ -49,6 +60,8 @@ public class CustomerView extends javax.swing.JFrame {
         addbotton = new javax.swing.JButton();
         deletebotton = new javax.swing.JButton();
         updatebotton = new javax.swing.JButton();
+        custSalaryLabel = new javax.swing.JLabel();
+        custSalaryText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,12 +118,25 @@ public class CustomerView extends javax.swing.JFrame {
 
         addbotton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         addbotton.setText("Save customer");
+        addbotton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addbottonActionPerformed(evt);
+            }
+        });
 
         deletebotton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         deletebotton.setText("Delete customer");
 
         updatebotton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         updatebotton.setText("Update customer");
+
+        custSalaryLabel.setText("Salary");
+
+        custSalaryText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                custSalaryTextActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fromPanelLayout = new javax.swing.GroupLayout(fromPanel);
         fromPanel.setLayout(fromPanelLayout);
@@ -146,9 +172,15 @@ public class CustomerView extends javax.swing.JFrame {
                                     .addComponent(custcityText, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                                     .addComponent(custpostcodeText))
                                 .addGap(26, 26, 26)
-                                .addComponent(custprovinceLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(custprovinceText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(fromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(fromPanelLayout.createSequentialGroup()
+                                        .addComponent(custprovinceLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(custprovinceText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(fromPanelLayout.createSequentialGroup()
+                                        .addComponent(custSalaryLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(custSalaryText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(custdobText, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(133, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fromPanelLayout.createSequentialGroup()
@@ -192,7 +224,10 @@ public class CustomerView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(fromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(custpostcodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(custpostcodeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(custpostcodeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(fromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(custSalaryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(custSalaryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(fromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addbotton)
@@ -243,11 +278,22 @@ public class CustomerView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_custpostcodeTextActionPerformed
 
+    private void addbottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbottonActionPerformed
+           // TODO add your handling code here:
+           saveCustomer();
+    }//GEN-LAST:event_addbottonActionPerformed
+
+    private void custSalaryTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custSalaryTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_custSalaryTextActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addbotton;
     private javax.swing.JPanel basePanel;
+    private javax.swing.JLabel custSalaryLabel;
+    private javax.swing.JTextField custSalaryText;
     private javax.swing.JLabel custaddressLabel;
     private javax.swing.JTextField custaddressText;
     private javax.swing.JLabel custcityLabel;
@@ -270,4 +316,31 @@ public class CustomerView extends javax.swing.JFrame {
     private javax.swing.JLabel headerlabel;
     private javax.swing.JButton updatebotton;
     // End of variables declaration//GEN-END:variables
+
+    private void saveCustomer(){
+        
+     CustomerModel customer = new CustomerModel(
+             custidText.getText(),
+              custtitleText.getText(),
+              custdobText.getText(),
+             custnameText.getText(),
+             Double.parseDouble(custSalaryText.getText()),
+             custaddressText.getText(),
+             custcityText.getText(),
+             custprovinceText.getText(),
+             custpostcodeText.getText());
+        System.out.println("Customer"+customer.toString());
+        
+        try {
+            String resp = customerContoller.saveCustomer(customer);
+              JOptionPane.showMessageDialog(this, resp);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+        
+        
+        
+    }
+    
 }
