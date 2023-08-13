@@ -12,8 +12,8 @@ public class CustomerModel {
     
     private String custId;
     private String title;
+    private String names;
     private String dob;
-    private String name;
     private Double salary;
     private String address;
     private String city;
@@ -27,11 +27,11 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
-    public CustomerModel(String custId, String title,String dob, String name, Double salary, String address, String city, String province, String zip) {
+    public CustomerModel(String custId, String title,String names, String dob, Double salary, String address, String city, String province, String zip) {
         this.custId = custId;
         this.title = title;
+        this.names = names;
         this.dob = dob;
-        this.name = name;
         this.salary = salary;
         this.address = address;
         this.city = city;
@@ -68,17 +68,17 @@ public class CustomerModel {
     }
 
     /**
-     * @return the name
+     * @return the dob
      */
-    public String getName() {
-        return name;
+    public String getDob() {
+        return dob;
     }
 
     /**
-     * @param name the name to set
+     * @param dob the dob to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     /**
@@ -150,20 +150,20 @@ public class CustomerModel {
     public void setZip(String zip) {
         this.zip = zip;
     }
-    public String getDob() {
-        return dob;
+    public String getNames() {
+        return names;
     }
 
     /**
-     * @param dob the dob to set
+     * @param names the names to set
      */
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setNames(String names) {
+        this.names = names;
     }
 
     @Override
     public String toString() {
-        return "CustomerModel{" + "custId=" + custId + ", title=" + title + ", dob=" + dob + ", name=" + name + ", salary=" + salary + ", address=" + address + ", city=" + city + ", province=" + province + ", zip=" + zip + '}';
+        return "CustomerModel{" + "custId=" + custId + ", title=" + title + ", dob=" + names + ", name=" + dob + ", salary=" + salary + ", address=" + address + ", city=" + city + ", province=" + province + ", zip=" + zip + '}';
     }
 
   

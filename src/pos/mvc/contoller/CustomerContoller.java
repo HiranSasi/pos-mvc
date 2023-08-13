@@ -8,6 +8,8 @@ import java.sql.Connection;
 import pos.mvc.db.DBConnection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 
 /**
@@ -26,8 +28,8 @@ public class CustomerContoller {
         
          preparedStatement.setString(1, customerModel.getCustId());
          preparedStatement.setString(2, customerModel.getTitle());
-         preparedStatement.setString(3, customerModel.getName());
-         preparedStatement.setString(4, customerModel.getDob());
+         preparedStatement.setString(3, customerModel.getDob());
+         preparedStatement.setString(4, customerModel.getNames());
          preparedStatement.setDouble(5, customerModel.getSalary());
          preparedStatement.setString(6, customerModel.getAddress());
          preparedStatement.setString(7, customerModel.getCity());
@@ -42,6 +44,42 @@ public class CustomerContoller {
         }else{
                 return "Fail";
             }
+    }
+            
+            public ArrayList<CustomerModel> getAllCustomers() throws SQLException{
+            
+                Connection connection =DBConnection.getInstance().getConnection();
+                 String query = "SELECT * FROM Customer";
+                 
+                 PreparedStatement statement = connection.prepareStatement(query);
+                  ResultSet rst = statement.executeQuery();
+                  
+                  ArrayList<CustomerModel> customerModels = new ArrayList<>();
+                  
+                  while(rst.next()){
+                  
+                  CustomerModel cm = new CustomerModel(rst.getString(1),
+                          rst.getString(2), 
+                          rst.getNString(3),
+                          rst.getString(4),
+                          rst.getDouble(5),
+                         rst.getString(6),
+                          rst.getString(7),
+                          rst.getString(8),
+                          rst.getString(9));
+                  
+                  customerModels.add(cm);
+                          
+                  
+                  }
+                  
+                  
+                  
+                  
+                 return customerModels;
+            
+            
+            }
          
          
          
@@ -55,4 +93,4 @@ public class CustomerContoller {
     
     
     
-}
+
