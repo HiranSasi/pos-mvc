@@ -135,6 +135,11 @@ public class CustomerView extends javax.swing.JFrame {
 
         updatebotton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         updatebotton.setText("Update customer");
+        updatebotton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatebottonActionPerformed(evt);
+            }
+        });
 
         custSalaryLabel.setText("Salary");
 
@@ -159,6 +164,11 @@ public class CustomerView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(customerTable);
 
         javax.swing.GroupLayout tablepanelLayout = new javax.swing.GroupLayout(tablepanel);
@@ -330,6 +340,16 @@ public class CustomerView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_custnameTextActionPerformed
 
+    private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
+        // TODO add your handling code here:
+        searchCustomer();
+    }//GEN-LAST:event_customerTableMouseClicked
+
+    private void updatebottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebottonActionPerformed
+        // TODO add your handling code here:
+        updateCustomer();
+    }//GEN-LAST:event_updatebottonActionPerformed
+
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,13 +453,77 @@ public class CustomerView extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex);
-        
-        }
-        
-        
-         
          
      
      
      }
+        
+     }
+     
+     private void searchCustomer(){
+     
+        try {
+            String custId =customerTable.getValueAt(customerTable.getSelectedRow(), 0).toString();
+            CustomerModel customerModel = customerContoller.getCustomer(custId);
+            
+            if(customerModel != null){
+            
+              custidText.setText(customerModel.getCustId());
+            custtitleText.setText(customerModel.getTitle());
+            custnameText.setText(customerModel.getNames());
+            custdobText.setText(customerModel.getDob());
+            custSalaryText.setText(Double.toString(customerModel.getSalary()));
+            custaddressText.setText(customerModel.getAddress());
+            custcityText.setText(customerModel.getCity());
+            custprovinceText.setText(customerModel.getProvince());
+            custpostcodeText.setText(customerModel.getZip());
+                 
+            
+            }else{
+            
+            
+            JOptionPane.showMessageDialog(this,"Customer Not Found");
+            
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(this, ex);
+        }
+     
+     
+     
+     
+     }
+     
+     private void updateCustomer(){
+     
+        try {
+            CustomerModel customer = new CustomerModel(
+                    custidText.getText(),
+                    custtitleText.getText(),
+                    custdobText.getText(),
+                    custnameText.getText(),
+                    Double.parseDouble(custSalaryText.getText()),
+                    custaddressText.getText(),
+                    custcityText.getText(),
+                    custprovinceText.getText(),
+                    custpostcodeText.getText());
+            
+            
+           String resp = customerContoller.updateCustomer(customer);
+             JOptionPane.showMessageDialog(this, resp);
+              clear();
+              loadAllCustomers();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerView.class.getName()).log(Level.SEVERE, null, ex);
+       
+         JOptionPane.showMessageDialog(this, ex);
+        }
+        
+        
+     
+     }
+     
 }
