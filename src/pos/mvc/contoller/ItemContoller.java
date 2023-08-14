@@ -97,5 +97,37 @@ public class ItemContoller {
      
      return null;
      }
+     
+     public String updateItems(ItemModel item) throws SQLException{
+     
+      Connection connection = DBConnection.getInstance().getConnection();
+        String query = "UPDATE Item SET Description=?, PackSize=?, UnitPrice=?, QtyOnHand=? WHERE ItemCode=?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        
+        statement.setString(1, item.getDescription());
+        statement.setString(2, item.getPackSize());
+        statement.setDouble(3, item.getUnitPrice());
+        statement.setInt(4, item.getQoh());
+        statement.setString(5, item.getItemCode());
+        if(statement.executeUpdate() > 0){
+            return "Success";
+        } else{
+            return "Fail";
+        }
+     
+     
+     }
+     
+     public String deleteItem(String itemCode) throws SQLException{
+        Connection connection = DBConnection.getInstance().getConnection();
+        String query = "DELETE FROM Item WHERE ItemCode =?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, itemCode);
+        if(statement.executeUpdate() > 0){
+            return "Success";
+        } else{
+            return "Fail";
+        }
+    }
     
 }

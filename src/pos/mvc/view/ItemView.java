@@ -268,12 +268,12 @@ public class ItemView extends javax.swing.JFrame {
 
     private void deletebottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebottonActionPerformed
         // TODO add your handling code here:
-        deletCustomer();
+        deletItem();
     }//GEN-LAST:event_deletebottonActionPerformed
 
     private void updatebottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebottonActionPerformed
         // TODO add your handling code here:
-        updateCustomer();
+        updateItems();
     }//GEN-LAST:event_updatebottonActionPerformed
 
     private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
@@ -404,6 +404,46 @@ public void  loadAllItems(){
             Logger.getLogger(ItemView.class.getName()).log(Level.SEVERE, null, ex);
              JOptionPane.showMessageDialog(this, ex);
         }
+    
+    
+    }
+    
+    private void updateItems(){
+    
+    
+        try {
+            ItemModel itemModel = new ItemModel(itemcodeText.getText(),
+                    itemdescriptionText.getText(),
+                    itempackSizeText.getText(),
+                    Double.parseDouble(itemunitpriceText.getText()),
+                    Integer.parseInt(itemqohText.getText()));
+            
+            String resp = itemContoller.updateItems(itemModel);
+            JOptionPane.showMessageDialog(this, resp);
+            clear();
+            loadAllItems();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+            
+    
+    }
+    
+    private void deletItem(){
+    
+        try {
+            String itemCode = itemcodeText.getText();
+            String resp = itemContoller.deleteItem(itemCode);
+            JOptionPane.showMessageDialog(this, resp);
+            clear();
+            loadAllItems();
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemView.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(this, ex);
+        }
+    
     
     
     }
