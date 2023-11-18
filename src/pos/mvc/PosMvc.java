@@ -22,7 +22,11 @@ public class PosMvc {
       // new CustomerView().setVisible(true);
      // new ItemView().setVisible(true);
     // new OrderView().setVisible(true);
+    
+   
+    
     new MainView().setVisible(true);
+    
        
         // TODO code application logic here
     }
