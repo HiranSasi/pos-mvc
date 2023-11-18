@@ -5,6 +5,7 @@
 package pos.mvc;
 import pos.mvc.view.CustomerView;
 import pos.mvc.view.ItemView;
+import pos.mvc.view.MainView;
 import pos.mvc.view.OrderView;
 
 /**
@@ -20,7 +21,8 @@ public class PosMvc {
         
       // new CustomerView().setVisible(true);
      // new ItemView().setVisible(true);
-     new OrderView().setVisible(true);
+    // new OrderView().setVisible(true);
+    new MainView().setVisible(true);
        
         // TODO code application logic here
     }
